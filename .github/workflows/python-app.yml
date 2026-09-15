@@ -25,3 +25,6 @@ jobs:
 
       - name: Check Python syntax
         run: python -m py_compile bitvavo_paper_trader.py
+      - name: Test Bitvavo public API
+        run: |
+          python -c "import requests; markets=requests.get('https://api.bitvavo.com/v2/markets', timeout=15).json(); eur=[m for m in markets if m.get('quote')=='EUR' and m.get('status')=='trading']; print('EUR-markten gevonden:', len(eur)); print('Eerste markt:', eur[0]['market'] if eur else 'geen')"
